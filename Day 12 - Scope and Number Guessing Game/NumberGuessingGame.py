@@ -10,9 +10,9 @@ print("I'm thinking of a number between 1 and 100.")
 #global variables
 difficulty = input("Choose a difficulty. Type 'easy' or 'hard' ")
 random_number_generator = random.randint(0,100)
-print(random_number_generator)
 
 #functions
+
 # easy mode allows the user 10 guesses
 def easy_mode():
     attempts = 9
