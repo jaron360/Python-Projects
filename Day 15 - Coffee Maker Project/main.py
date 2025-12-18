@@ -33,15 +33,18 @@ resources = {
     "coffee": 100,
 }
 
+#defining the money
+quarter = 0.25
+dime = .10
+penny = .1
+nickel = .5
+dollar = 1.0
 
 shutdown = False
+
 while not shutdown:
     #Ask the user what drink they would like to make
-    user_choice = input("What would you like?\n- espresso \n- latte\n- cappuccino\n- Shutdown\n Choice: ").lower()
-
-
-    #printing the report of available resources
-    print(f"Here are the available resources in Ml\n{resources}")
+    user_choice = input("What would you like?\n- espresso \n- latte\n- cappuccino\n- Shutdown\n- Report\nChoice: ").lower()
 
 
     def brewing_coffee():
@@ -111,10 +114,39 @@ while not shutdown:
             print("---Sufficient coffee available---")
 
         #Determine if user has enough money to pay for the drink
-        money_submitted = float(input("Please enter coins to purchase drink "))
+        money_submitted = 0.0
+        while money_submitted < cost:
+            coin = input("Insert coin (quarter/dime/nickel/penny/dollar) or 'done': ").lower()
+            if coin == "done":
+                break
+            elif coin == "quarter":
+                money_submitted += quarter
+                print(f"Added $0.25. Total: ${money_submitted:.2f}")
+            elif coin == "dime":
+                money_submitted += dime
+                print(f"Added $0.10. Total: ${money_submitted:.2f}")
+            elif coin == "nickel":
+                money_submitted += nickel
+                print(f"Added $0.05. Total: ${money_submitted:.2f}")
+            elif coin == "penny":
+                money_submitted += penny
+                print(f"Added $0.01. Total: ${money_submitted:.2f}")
+            elif coin == "dollar":
+                money_submitted += dollar
+                print(f"Added $1.00. Total: ${money_submitted:.2f}")
+            else:
+                print("Invalid coin. Please use: quarter, dime, nickel, or penny")
+
         if money_submitted == cost:
             print("Thank you, pouring drink now!\n")
             brewing_coffee()
+
+        if money_submitted > cost:
+            change = money_submitted - cost
+            if change > 0:
+                print(f"Here's your change: ${change:.2f}")
+                print("Thank you, pouring drink now!\n")
+                brewing_coffee()
 
             #Subtract the resources used from available resources
             resources["water"] -= water_requirement
@@ -156,23 +188,115 @@ while not shutdown:
             print("---Sufficient Milk available---")
 
         #Determine if user has enough money to pay for the drink
-        money_submitted = float(input("Please enter coins to purchase drink: "))
+        money_submitted = 0.0
+        while money_submitted < cost:
+            coin = input("Insert coin (quarter/dime/nickel/penny/dollar) or 'done': ").lower()
+            if coin == "done":
+                break
+            elif coin == "quarter":
+                money_submitted += quarter
+                print(f"Added $0.25. Total: ${money_submitted:.2f}")
+            elif coin == "dime":
+                money_submitted += dime
+                print(f"Added $0.10. Total: ${money_submitted:.2f}")
+            elif coin == "nickel":
+                money_submitted += nickel
+                print(f"Added $0.05. Total: ${money_submitted:.2f}")
+            elif coin == "penny":
+                money_submitted += penny
+                print(f"Added $0.01. Total: ${money_submitted:.2f}")
+            elif coin == "dollar":
+                money_submitted += dollar
+                print(f"Added $1.00. Total: ${money_submitted:.2f}")
+            else:
+                print("Invalid coin. Please use: quarter, dime, nickel, or penny")
+
         if money_submitted == cost:
             print("Thank you, pouring drink now!\n")
             brewing_latte()
+
+        if money_submitted > cost:
+            change = money_submitted - cost
+            if change > 0:
+                print(f"Here's your change: ${change:.2f}")
+                print("Thank you, pouring drink now!\n")
+                brewing_latte()
 
             #Subtract the resources used from available resources
             resources["water"] -= water_requirement
             resources["coffee"] -= coffee_requirement
             resources["milk"] -= milk_requirement
-            print(resources["water"])
-            print(resources["coffee"])
-            print(resources["milk"])
+
+
+    def cappuccino():
+        cappuccino_data = MENU["cappuccino"]
+        ingredients = cappuccino_data["ingredients"]
+        water_requirement = ingredients["water"]
+        coffee_requirement = ingredients["coffee"]
+        milk_requirement = ingredients["milk"]
+        cost = cappuccino_data["cost"]
+
+        #determine if there is enough coffee, water, and milk for a latte
+        if water_requirement > resources["water"]:
+            print("Not Enough Water available!")
+            exit()
         else:
-            print("Insufficient funds")
+            print("---Sufficient water available---")
+
+        if coffee_requirement > resources["coffee"]:
+            print("Not Enough Coffee available!")
+            exit()
+        else:
+            print("---Sufficient coffee available---")
 
 
-    #def cappuccino():
+        if milk_requirement > resources["milk"]:
+            print("Not Enough Milk Available")
+            exit()
+        else:
+            print("---Sufficient Milk available---")
+
+        #Determine if user has enough money to pay for the drink
+        money_submitted = 0.0
+        while money_submitted < cost:
+            coin = input("Insert coin (quarter/dime/nickel/penny/dollar) or 'done': ").lower()
+            if coin == "done":
+                break
+            elif coin == "quarter":
+                money_submitted += quarter
+                print(f"Added $0.25. Total: ${money_submitted:.2f}")
+            elif coin == "dime":
+                money_submitted += dime
+                print(f"Added $0.10. Total: ${money_submitted:.2f}")
+            elif coin == "nickel":
+                money_submitted += nickel
+                print(f"Added $0.05. Total: ${money_submitted:.2f}")
+            elif coin == "penny":
+                money_submitted += penny
+                print(f"Added $0.01. Total: ${money_submitted:.2f}")
+            elif coin == "dollar":
+                money_submitted += dollar
+                print(f"Added $1.00. Total: ${money_submitted:.2f}")
+            else:
+                print("Invalid coin. Please use: quarter, dime, nickel, or penny")
+
+        if money_submitted == cost:
+            print("Thank you, pouring drink now!\n")
+            brewing_cappuccino()
+
+        if money_submitted > cost:
+            change = money_submitted - cost
+            if change > 0:
+                print(f"Here's your change: ${change:.2f}")
+                print("Thank you, pouring drink now!\n")
+                brewing_cappuccino()
+
+            #Subtract the resources used from available resources
+        resources["water"] -= water_requirement
+        resources["coffee"] -= coffee_requirement
+        resources["milk"] -= milk_requirement
+
+
 
 
     def shutdown_animation():
@@ -197,11 +321,12 @@ while not shutdown:
         expresso()
     elif user_choice == "latte":
         latte()
-    #elif user_choice == "cappuccino":
-     #   cappuccino()
+    elif user_choice == "cappuccino":
+        cappuccino()
     elif user_choice == "shutdown":
         shutdown_animation()
         shutdown = True
-
-
-
+    elif user_choice == "report":
+        print(resources)
+    else:
+        print("invalid option")
